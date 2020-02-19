@@ -17,25 +17,22 @@
         </div>
 
     </div>
-    
-
-    <form action="" id="initials">
-
-    </form>
-
+ 
     <div class="row justify-content-center no-gutters">
         <div class="col-sm-6">
-            <form id="score-form" method="POST">
-                <label for="score-text">Add a Todo:</label>
-                <input type="text" placeholder="Initials" name="todo-text" id="todo-text" />
-
-            </form>
             <div class = "score-list">
 
             </div>
         </div>
     </div>
     
-    <script src="../Assets/scorescript.js"></script>
+    <script>
+        var scoreList = document.querySelector("#score-list")
+        var scores = [];
+
+        function showScores() {
+            var storedScore = JSNO.parse(localStorage.getItem("scores"))
+        }
+    </script>
 </body>
 </html>
