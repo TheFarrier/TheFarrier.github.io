@@ -44,11 +44,11 @@ var score = [
 ]
 
 var counter = 0;
-var time = 80;
+var time = 75;
 var getQuestion = document.querySelector("#question");
 var getOptions = document.querySelector("#answer");
 var getTimer = document.querySelector("#timer");
-var timerInterval = setInterval(timeTracker, 1000);
+var timerInterval;
 
 var displayQuestion = document.createElement("h5");
 displayQuestion.setAttribute("class","card-title");
@@ -119,12 +119,15 @@ function loadQuestion() {
 
 // Starts countdown and calls gameOver(); when countdown reaches 0
 function timeTracker() {
+    timerInterval = setInterval(function(){
     time--;
       getTimer.textContent = time;
   
       if(time <= 0) {
         gameOver();
       }
+    }, 1000);
+    
   }
 
 
