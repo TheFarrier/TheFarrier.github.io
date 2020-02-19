@@ -1,26 +1,59 @@
 var data = [
     {
-        question : "what is the question?",
+        question : "This is Question 1?",
         options : ["answer1", "answer2", "answer3", "answer4"],
         answer : "answer1",
     },
     {
-        question : "what is the question?",
+        question : "This is Question 2?",
         options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer1234",
+        answer : "answer4",
+    },
+    {
+        question : "This is Question 3?",
+        options : ["answer1", "answer2", "answer3", "answer4"],
+        answer : "answer2",
+    },
+    {
+        question : "This is Question 4?",
+        options : ["answer1", "answer2", "answer3", "answer4"],
+        answer : "answer3",
+    },
+    {
+        question : "This is Question 5?",
+        options : ["answer1", "answer2", "answer3", "answer4"],
+        answer : "answer2",
+    },
+    {
+        question : "This is Question 6?",
+        options : ["answer1", "answer2", "answer3", "answer4"],
+        answer : "answer4",
+    },
+    {
+        question : "This is Question 7?",
+        options : ["answer1", "answer2", "answer3", "answer4"],
+        answer : "answer3",
+    }
+]
+
+var score = [
+    {
+        name: "",
+        highScore: "",
     }
 ]
 
 var counter = 0;
-var time = 75;
+var time = 80;
 var getQuestion = document.querySelector("#question");
 var getOptions = document.querySelector("#answer");
 var getTimer = document.querySelector("#timer");
+var timerInterval = setInterval(timeTracker, 1000);
 
-// var displayQuestion = document.createElement("h5");
-// displayQuestion.setAttribute("class","card-title");
-// displayQuestion.textContent = "Press Button to Start Quiz";
-// getQuestion.appendChild(displayQuestion)
+var displayQuestion = document.createElement("h5");
+displayQuestion.setAttribute("class","card-title");
+displayQuestion.textContent = "Press Button to Start Quiz";
+getQuestion.appendChild(displayQuestion)
 
 //Start Button for quiz
 var startButton = document.createElement('button');
@@ -31,16 +64,24 @@ getOptions.appendChild(startButton);
 startButton.addEventListener("click",loadQuestion);
 startButton.addEventListener("click",timeTracker);
 
-
 // Click event to check for correct answers
-getOptions.addEventListener("click",function(event){
+function buttonClick(event){
+    
 
     // If correct, button turns green and loads next question
     if (event.target.textContent === data[counter].answer) {
         event.target.setAttribute("class","btn btn-success col-4 m-1");
         counter++;
+        console.log(counter);
+        console.log(data.length);
 
-        setTimeout(loadQuestion, 1000);
+        if(counter >= data.length){
+            gameOver();
+            getScore();
+        }else{
+            setTimeout(loadQuestion, 1000);
+        }
+        
     
     // If wrong, button turns red and reduces timer by 5, does not load next question
     } else {
@@ -48,15 +89,19 @@ getOptions.addEventListener("click",function(event){
         time -= 5;
         getTimer.textContent = time;
     }
-});
+};
+
+
 
 function loadQuestion() {
 
     getOptions.innerHTML = "";
+    getQuestion.innerHTML = "";
+
     console.log("Load Question");
 
     // Displays next question
-    var displayQuestion = document.createElement("h5");
+    // var displayQuestion = document.createElement("h5");
     displayQuestion.textContent = data[counter].question;
     getQuestion.appendChild(displayQuestion);
 
@@ -64,7 +109,9 @@ function loadQuestion() {
     for (var i = 0; i < data[counter].options.length; i++){
         var displayOptions = document.createElement('button');
         displayOptions.setAttribute("class","btn btn-primary col-4 m-1");
+        displayOptions.setAttribute("onclick", "event.stopPropagation()")
         displayOptions.textContent = data[counter].options[i];
+        displayOptions.addEventListener("click",buttonClick)
         getOptions.appendChild(displayOptions);
     
     }
@@ -72,19 +119,29 @@ function loadQuestion() {
 
 // Starts countdown and calls gameOver(); when countdown reaches 0
 function timeTracker() {
-    var timerInterval = setInterval(function() {
-      time--;
+    time--;
       getTimer.textContent = time;
   
-      if(time === 0) {
-        clearInterval(timerInterval);
+      if(time <= 0) {
         gameOver();
       }
-  
-    }, 1000);
   }
 
 
 function gameOver(){
+    getOptions.innerHTML = "";
+    clearInterval(timerInterval);
+
+    displayQuestion.textContent = "Game Over";
     console.log("Game Over");
+  }
+
+  function getScore(){
+    document.querySelector("#initials").style.display = "block";
+    console.log("Get Score");
+  }
+
+  function storeScore() {
+    // Stringify and store the highScore array
+    localStorage.setItem("score", JSON.stringify(score));
   }
