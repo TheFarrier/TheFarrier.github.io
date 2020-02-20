@@ -1,42 +1,42 @@
 var data = [
     {
-        question : "This is Question 1?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer1",
+        question : "What does Allegro Moderato mean?",
+        options : ["Moderately Loud", "Moderately Quiet", "Moderately Quick", "Moderately Slow"],
+        answer : "Moderately Quick",
     },
     {
-        question : "This is Question 2?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer4",
+        question : "What does accel. mean?",
+        options : ["Gradually Quicker", "Gradually Slower", "Gradually Louder", "Gradually Angrier"],
+        answer : "Gradually Quicker",
     },
     {
-        question : "This is Question 3?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer2",
+        question : "The numbers at the begining of a peice of music respresent the:",
+        options : ["Beat", "Measure", "Time Signature", "Key Signature"],
+        answer : "Time Signature",
     },
     {
-        question : "This is Question 4?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer3",
+        question : "What is the standard tuning of a guitar?",
+        options : ["D A D G B E", "E A D G B E", "D A D G A D", "D G D G B D"],
+        answer : "E A D G B E",
     },
     {
-        question : "This is Question 5?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer2",
+        question : "The musical term used to describe differences in volume is?",
+        options : ["Loudness", "Volume", "Dynamics", "Resonance"],
+        answer : "Dynamics",
     },
     {
-        question : "This is Question 6?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer4",
+        question : "A note played one half step higher is called:",
+        options : ["Flat", "Sharp", "Suspended", "Dull"],
+        answer : "Sharp",
     },
     {
-        question : "This is Question 7?",
-        options : ["answer1", "answer2", "answer3", "answer4"],
-        answer : "answer3",
+        question : "What grade am I getting on this homework?",
+        options : ["A", "B", "C", "D"],
+        answer : "A",
     }
 ]
 
-var score;
+var score = [];
 
 var counter = 0;
 var time = 75;
@@ -59,17 +59,20 @@ getOptions.appendChild(startButton);
 startButton.addEventListener("click",loadQuestion);
 startButton.addEventListener("click",timeTracker);
 
-if(localStorage.getItem("score") == null){
-    score = [
-        {
-            name: "NKF",
-            score: "20",
-        }
-    ];
-    storeScore();
-} else {
-    score = localStorage.getItem("score")
-}
+loadScores();
+
+
+// if(!localStorage.getItem("scores")){
+//     score = [
+//         {
+//             name: "NKF",
+//             score: "20",
+//         }
+//     ];
+//     storeScore();
+// } else {
+//     score = localStorage.getItem("scores")
+// }
 
 // Click event to check for correct answers
 function buttonClick(event){
@@ -152,7 +155,9 @@ function getScore(){
         var scoreText = document.querySelector("#score-text").value.trim();
         score.push({"name": scoreText, "score": time});
         storeScore();
+        document.location.href = "highscore.html";
     })
+
     console.log("Get Score");
 
 }
@@ -162,5 +167,13 @@ function storeScore() {
     localStorage.setItem("scores", JSON.stringify(score));
 
     console.log(localStorage.getItem("scores"));
+}
+
+function loadScores() {
+    var storedScores = JSON.parse(localStorage.getItem("scores"))
+
+    if(storedScores !== null) {
+        score = storedScores;
+    }
 }
 
