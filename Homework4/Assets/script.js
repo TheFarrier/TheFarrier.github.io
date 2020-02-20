@@ -37,7 +37,6 @@ var data = [
 ]
 
 var score = [];
-
 var counter = 0;
 var time = 75;
 var getQuestion = document.querySelector("#question");
@@ -45,6 +44,7 @@ var getOptions = document.querySelector("#answer");
 var getTimer = document.querySelector("#timer");
 var timerInterval;
 
+// Creates the card that will house start button and Questions
 var displayQuestion = document.createElement("h5");
 displayQuestion.setAttribute("class","card-title");
 displayQuestion.textContent = "Press Button to Start Quiz";
@@ -126,7 +126,7 @@ function timeTracker() {
     
   }
 
-
+// Stops timer and removes question html when called
 function gameOver(){
     getOptions.innerHTML = "";
     clearInterval(timerInterval);
@@ -135,6 +135,7 @@ function gameOver(){
     console.log("Game Over");
   }
 
+// Replaces Game Over card with high score form if all questions were answered
 function getScore(){
     document.querySelector("#initials").style.display = "block";
     document.querySelector("#initials").addEventListener("submit", function(event){
@@ -146,16 +147,16 @@ function getScore(){
     })
 
     console.log("Get Score");
-
 }
 
+// Stringify and store the highScore array
 function storeScore() {
-    // Stringify and store the highScore array
     localStorage.setItem("scores", JSON.stringify(score));
 
     console.log(localStorage.getItem("scores"));
 }
 
+// Loads scores from local storage if there are any
 function loadScores() {
     var storedScores = JSON.parse(localStorage.getItem("scores"))
 
