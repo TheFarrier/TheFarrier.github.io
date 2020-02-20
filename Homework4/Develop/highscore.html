@@ -16,11 +16,18 @@
             </div>
         </div>
 
+        <div class="col-auto">
+            <div id="clear-scores">
+                <button id="clear-button">Clear Scores</button>
+            </div>
+        </div>
+
     </div>
  
     <div class="row justify-content-center no-gutters">
         <div class="col-sm-6">
-            <div class = "score-list">
+            <div id = "score-list">
+                <h5>High Scores</h5>
 
             </div>
         </div>
@@ -30,9 +37,29 @@
         var scoreList = document.querySelector("#score-list")
         var scores = [];
 
+        document.querySelector("#clear-button").addEventListener("click", function(){
+            resetScore();
+            showScores();
+        })
+
         function showScores() {
-            var storedScore = JSNO.parse(localStorage.getItem("scores"))
+            scores = JSON.parse(localStorage.getItem("scores"));
+            console.log(scores);
+
+            for (var i = 0; i < scores.length; i++){
+            var displayOptions = document.createElement('li');
+            displayOptions.textContent = "Name:" + scores[i].name + " Score" + scores[i].score;
+            scoreList.appendChild(displayOptions);
+
+            }
         }
+
+        function resetScore() {
+            localStorage.clear();
+        }
+        console.log(localStorage.getItem("scores"));
+
+        showScores();
     </script>
 </body>
 </html>
