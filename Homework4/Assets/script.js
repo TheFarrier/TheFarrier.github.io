@@ -139,12 +139,18 @@ function gameOver(){
     console.log("Game Over");
   }
 
-  function getScore(){
+function getScore(){
     document.querySelector("#initials").style.display = "block";
+    document.querySelector("#initials").addEventListener("submit", function(event){
+        event.preventDefault();
+        var scoreText = documen.querySelector("#score-text").value.trim();
+        score.push({name: scoreText, score: time})
+    })
     console.log("Get Score");
-  }
 
-  function storeScore() {
+}
+
+function storeScore() {
     // Stringify and store the highScore array
     localStorage.setItem("score", JSON.stringify(score));
-  }
+}
