@@ -12,13 +12,13 @@
     <div class="row">
         <div class="col-auto mr-auto">
             <div id="start">
-                <a href="index.html">New Quiz</a>
+                <a class = "btn btn-primary" href="index.html">New Quiz</a>
             </div>
         </div>
 
         <div class="col-auto">
             <div id="clear-scores">
-                <button id="clear-button">Clear Scores</button>
+                <button id="clear-button" class = "btn btn-primary">Clear Scores</button>
             </div>
         </div>
 
@@ -26,9 +26,21 @@
  
     <div class="row justify-content-center no-gutters">
         <div class="col-sm-6">
-            <div id = "score-list">
+            <div>
                 <h5>High Scores</h5>
-
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Initials</th>
+                        <th scope="col">Score</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody id = "score-list">
+                     
+                    </tbody>
+                  </table>
             </div>
         </div>
     </div>
@@ -46,12 +58,32 @@
             scores = JSON.parse(localStorage.getItem("scores"));
             console.log(scores);
 
-            for (var i = 0; i < scores.length; i++){
-            var displayOptions = document.createElement('li');
-            displayOptions.textContent = "Name:" + scores[i].name + " Score" + scores[i].score;
-            scoreList.appendChild(displayOptions);
+            if(scores !== null){
+                
+                scores.sort(function(a,b){
+                    return a.score - b.score;
+                });
 
+                for (var i = 0; i < scores.length; i++){
+                    scores.sort(function(a, b){
+                        return a.score < b.score;
+                    });    
+                    var playerRow = document.createElement('tr');
+                    var playerNumber = document.createElement('th');
+                    var playerName = document.createElement('td');
+                    var playerScore = document.createElement('td');
+                    playerNumber.setAttribute("scope", "row")
+                    playerNumber.textContent = i+1;
+                    playerName.textContent = scores[i].name;
+                    playerScore.textContent = scores[i].score;
+                    scoreList.appendChild(playerRow);
+                    playerRow.appendChild(playerNumber);
+                    playerRow.appendChild(playerName);
+                    playerRow.appendChild(playerScore);
+                 }
             }
+
+            
         }
 
         function resetScore() {
