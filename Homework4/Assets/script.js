@@ -36,12 +36,7 @@ var data = [
     }
 ]
 
-var score = [
-    {
-        name: "",
-        highScore: "",
-    }
-]
+var score;
 
 var counter = 0;
 var time = 75;
@@ -64,10 +59,21 @@ getOptions.appendChild(startButton);
 startButton.addEventListener("click",loadQuestion);
 startButton.addEventListener("click",timeTracker);
 
+if(localStorage.getItem("score") == null){
+    score = [
+        {
+            name: "NKF",
+            score: "20",
+        }
+    ];
+    storeScore();
+} else {
+    score = localStorage.getItem("score")
+}
+
 // Click event to check for correct answers
 function buttonClick(event){
     
-
     // If correct, button turns green and loads next question
     if (event.target.textContent === data[counter].answer) {
         event.target.setAttribute("class","btn btn-success col-4 m-1");
@@ -79,7 +85,7 @@ function buttonClick(event){
             gameOver();
             getScore();
         }else{
-            setTimeout(loadQuestion, 1000);
+            setTimeout(loadQuestion, 250);
         }
         
     
@@ -143,8 +149,9 @@ function getScore(){
     document.querySelector("#initials").style.display = "block";
     document.querySelector("#initials").addEventListener("submit", function(event){
         event.preventDefault();
-        var scoreText = documen.querySelector("#score-text").value.trim();
-        score.push({name: scoreText, score: time})
+        var scoreText = document.querySelector("#score-text").value.trim();
+        score.push({"name": scoreText, "score": time});
+        storeScore();
     })
     console.log("Get Score");
 
@@ -152,5 +159,8 @@ function getScore(){
 
 function storeScore() {
     // Stringify and store the highScore array
-    localStorage.setItem("score", JSON.stringify(score));
+    localStorage.setItem("scores", JSON.stringify(score));
+
+    console.log(localStorage.getItem("scores"));
 }
+
