@@ -61,19 +61,6 @@ startButton.addEventListener("click",timeTracker);
 
 loadScores();
 
-
-// if(!localStorage.getItem("scores")){
-//     score = [
-//         {
-//             name: "NKF",
-//             score: "20",
-//         }
-//     ];
-//     storeScore();
-// } else {
-//     score = localStorage.getItem("scores")
-// }
-
 // Click event to check for correct answers
 function buttonClick(event){
     
@@ -104,13 +91,13 @@ function buttonClick(event){
 
 function loadQuestion() {
 
+    // Clear html of previous question
     getOptions.innerHTML = "";
     getQuestion.innerHTML = "";
 
     console.log("Load Question");
 
     // Displays next question
-    // var displayQuestion = document.createElement("h5");
     displayQuestion.textContent = data[counter].question;
     getQuestion.appendChild(displayQuestion);
 
