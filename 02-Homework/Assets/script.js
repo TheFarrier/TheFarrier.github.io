@@ -2,72 +2,58 @@ var schedule = [
   {
       hour : "9am",
       description : "Haircut",
-      current : "past",
       time: 9
   },
   {
     hour : "10am",
     description : "Haircut",
-    current : "past",
-    time: 10
-},
-{
-  hour : "11am",
-  description : "Haircut",
-  current : "present",
-  time: 11
-},
-{
-  hour : "12pm",
-  description : "Haircut",
-  current : "future",
-  time: 12
-},
-{
-  hour : "1pm",
-  description : "Haircut",
-  current : "future",
-  time: 13
-},
-{
-  hour : "2pm",
-  description : "Haircut",
-  current : "future",
-  time: 14
-},
-{
-  hour : "3pm",
-  description : "Haircut",
-  current : "future",
-  time: 15
-},
-{
-  hour : "4pm",
-  description : "Haircut",
-  current : "future",
-  time: 16
-},
-{
-  hour : "5pm",
-  description : "Haircut",
-  current : "future",
-  time: 17
-},
-]
+   time: 10
+  },
+ {
+   hour : "11am",
+    description : "Haircut",
+    time: 11
+   },
+  {
+    hour : "12pm",
+    description : "Haircut",
+    time: 12
+  },
+  {
+    hour : "1pm",
+    description : "Haircut",
+    time: 13
+  },
+  {
+   hour : "2pm",
+    description : "Haircut",
+    time: 14
+  },
+  {
+    hour : "3pm",
+     description : "Haircut",
+     time: 15
+  },
+   {
+     hour : "4pm",
+    description : "Haircut",
+    time: 16
+  },
+   {
+   hour : "5pm",
+    description : "Haircut",
+     time: 17
+   },
+ ]
 
 var currentHour = moment()._d.getHours();
 console.log(currentHour);
 
 function getSchedule(){
-  // use JSON.parse and localStorage.get to retrive schedule
-  // create schedule if it doesn't exist already
-  // (moment.js) for each item in schedule set the status to present, past, or future depending on time of day
-  return schedule
+  
 }
 
-function saveSchedule(schedule){
-  // localStorage.setItem and JSON.stringify
-}
+
 
 function renderSchedule(schedule){
   $(".container").empty()
@@ -75,29 +61,39 @@ function renderSchedule(schedule){
   schedule.forEach(el => {
     var slot = $("<div>").addClass("timeblock row");
     var hour = $("<div>").addClass("hour col-sm-1").text(el.hour);
-    var description = $("<textarea>").addClass("description col-sm-10").text(el.description);
-    var saveBtn = $("<button>").addClass("saveBtn col-sm-1").text("Save").attr("hour",el.hour);
+    var text = $("<textarea>").addClass("description col-sm-10").text(el.description);
+    var saveBtn = $("<button>").addClass("saveBtn col-sm-1").text("Save").attr("hour",el.time);
 
     //Set past present or future for description block
     if (el.time == currentHour){
-      description.addClass("present");
+      text.addClass("present");
     }else if(el.time <= currentHour){
-      description.addClass("past");
+      text.addClass("past");
     }else if(el.time >= currentHour){
-      description.addClass("future");
+      text.addClass("future");
     };
 
     //set click handler for save button
-    $(".saveBtn").click(function(event) {
-      
+    saveBtn.click(function(event) {
+      var getNewText = $(this).siblings("textarea").val();
+      console.log(getNewText);
+      var getThisButton = $(this).attr("hour");
+      console.log(getThisButton);
+      schedule.forEach(el => {
+        if(el.time == getThisButton)
+        el.description = getNewText;
+      })
+      event.stopPropagation();
+      console.log(el.description);
       // I have a data attribute called hour on each of my buttons
       // inside the click handler I navigate the tree using .parent() and .children to find my textarea
       // and I set the hour to the value of the textarea
+      renderSchedule(schedule)
       saveSchedule(schedule)
     })
 
 
-    slot.append(hour, description, saveBtn);
+    slot.append(hour, text, saveBtn);
     $(".container").append(slot);
   });
   // for each hour in the schedule, create a div with the bootstrap class 'row'
