@@ -1,6 +1,5 @@
 var currentHour = moment()._d.getHours();
 var currentDay = moment()._d.getDay();
-console.log(currentDay)
 
 function getSchedule(){
   var schedule = [];
