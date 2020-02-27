@@ -2,10 +2,15 @@ var currentHour = moment()._d.getHours();
 var currentDay = moment()._d.getDay();
 console.log(moment()._d.toDateString());
 
+$(".clearBtn").click(function(event){
+  localStorage.clear();
+  renderSchedule(getSchedule());
+})
+
 function getSchedule(){
-  var schedule = [];
-  schedule = JSON.parse(localStorage.getItem("schedule"));
+  var schedule = JSON.parse(localStorage.getItem("schedule"));
   var currentDay = localStorage.getItem("date");
+  $("#currentDay").text(moment()._d.toDateString());
   
   if (currentDay != moment()._d.toDateString()){
     //clear the schedule because it is not the same day as the stored schedule
@@ -24,7 +29,7 @@ function getSchedule(){
         schedule.push({"hour": i + "am", "description": "", "time": i});
       } else if (i == 12){
         schedule.push({"hour": i + "pm", "description": "", "time": i});
-      } else if (12 < i < 24){
+      } else if (12 < i < 23){
         schedule.push({"hour": (i-12) + "pm", "description": "", "time": i});
       } else if (i == 24){
         schedule.push({"hour": (i-12) + "am", "description": "", "time": i});
@@ -36,7 +41,6 @@ function getSchedule(){
 }
 
 function saveSchedule(schedule){
-  // localStorage.setItem and JSON.stringify
   localStorage.setItem("schedule", JSON.stringify(schedule))
 }
 
@@ -92,8 +96,7 @@ function renderSchedule(schedule){
 }
 
 function main() {
-  let schedule = getSchedule()
-  renderSchedule(schedule)
+  renderSchedule(getSchedule());
 }
   
   
