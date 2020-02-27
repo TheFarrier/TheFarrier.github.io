@@ -1,12 +1,17 @@
 var currentHour = moment()._d.getHours();
 var currentDay = moment()._d.getDay();
+console.log(moment()._d.toDateString());
 
 function getSchedule(){
   var schedule = [];
   schedule = JSON.parse(localStorage.getItem("schedule"));
+  var currentDay = localStorage.getItem("date");
   
-  var currentDay
-  
+  if (currentDay != moment()._d.toDateString()){
+    //clear the schedule because it is not the same day as the stored schedule
+    localStorage.clear();
+    localStorage.setItem("date", moment()._d.toDateString());
+  }
 
   // Use stored Schedule if one exists
   if (schedule != null){
@@ -19,7 +24,7 @@ function getSchedule(){
         schedule.push({"hour": i + "am", "description": "", "time": i});
       } else if (i == 12){
         schedule.push({"hour": i + "pm", "description": "", "time": i});
-      } else if (i > 12){
+      } else if (12 < i < 24){
         schedule.push({"hour": (i-12) + "pm", "description": "", "time": i});
       } else if (i == 24){
         schedule.push({"hour": (i-12) + "am", "description": "", "time": i});
