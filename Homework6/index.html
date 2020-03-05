@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -15,19 +16,16 @@
     <div class="row">
         <!-- Search column -->
         <div class="col-md-3">
-            <form role="form">
+            <form role="form" id="searchCity">
 
                 <!-- Here we create the text box for capturing the search term-->
                 <div id = "Search-aside" class="form-group">
-                  <label for="search">Search Term:</label>
                   <input type="text" class="form-control" id="search-term" placeholder="Search for a City">
                 </div>
     
                 <!--Here goes the buttons for page-->
-                <button type="submit" class="btn btn-default" id="run-search">
+                <button type = "submit" class="btn btn-default" id="run-search">
                     <i class="fa fa-search"></i> Search</button>
-                <button class="btn btn-default" id="clear-all">
-                    <i class="fa fa-trash"></i> Clear Results</button>
             </form>
             
             <div class="list-group">
@@ -42,24 +40,18 @@
         </div>
         
         <!-- display area -->
-        <div class="col-md-9 bg-light">Display Area
-            <div class="jumbotron">
-                <h1 class="display-4" id="city">Hello, world!</h1>
+        <div class="col-md-9 bg-light">
+            <div class="jumbotron" style="margin: 10px;">
+                <h1 class="display-1" id="city"></h1>
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                <p id="temp"></p>
+                <p id="humidity"></p>
+                <p id="windspeed"></p>
+                <p id="index"></p>
             </div>
             <h1>5 Day Forecast</h1>
-            <div class="row">
-                <div class="card text-center" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="rain">
-                      <p class="card-text">Temp</p>
-                      <p class="card-text">Humidity</p>
-
-                    </div>
-                  </div>
-                  
+            <div class="row" id="5day">
+                  <!-- 5 day forcast cards populate here -->
             </div>
         </div>
     </div>

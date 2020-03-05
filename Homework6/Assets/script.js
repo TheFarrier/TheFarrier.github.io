@@ -1,46 +1,74 @@
-    // This is our API key. Add your own API key between the ""
-    var APIKey = "b9a139b4b9cb18b6bfa3c4eb318e8ce0";
+$(document).ready(function() {
+    
+    var data = [];
+var cityName = "san-antonio";
 
-    // Here we are building the URL we need to query the database
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=Bujumbura,Burundi&appid=" + APIKey;
 
-    // We then created an AJAX call
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(response) {
 
-      // Create CODE HERE to Log the queryURL
-      console.log(queryURL);
-      // Create CODE HERE to log the resulting object
-      console.log(response);
-      // Create CODE HERE to transfer content to HTML
-      $("#city").text(response.name);
-      $(".wind").text(response.wind.speed);
-      $(".humidity").text(response.main.humidity);
-      $(".temp").text(response.main.temp);
-      // Create CODE HERE to calculate the temperature (converted from Kelvin)
-      // Hint: To convert from Kelvin to Fahrenheit: F = (K - 273.15) * 1.80 + 32
-      var temperature = (response.main.temp - 273.15) * 1.8 + 32;
-      // Create CODE HERE to dump the temperature content into HTML
-      $(".temp").text(temperature.toFixed(2));
+$("#searchCity").submit(event =>{
+    event.stopPropagation();
+    event.preventDefault();
+    cityName = $("#search-term").val();
+    console.log(cityName);
+    callAjax(cityName);
+    renderCurrent();
+    render5day();
+    addHistory();
+    console.log(data);
+});
+
+function addHistory(){
+    // Adds most recent search to history bar, if not already on there.
+};
+
+function renderCurrent(){
+    // Renders jumbotron with current weather info
+    console.log("renderCurrent")
+    $("#city").text(data.city.name);
+    $("#temp").text("Temperature:" + ((data.list[0].main.temp - 237.15) * 1.8 + 32).toFixed(2)+" *F");
+    $("#humidity").text("Humidity: " + data.list[0].main.humidity +"%");
+    $("#windspeed").text("Wind Speed: " + data.list[0].main.humidity +" MPH");
+    $("#index").text("UV Index: ");
+
+};
+
+function render5day (){
+    // Renders the 5 day forcast as cards below the current day forecast
+    console.log(data);
+    
+        for(var i = 0; i<5; i++){
+            console.log("New card");
+            var newCard = $("<div class= \"card text-center\" style=\"width: 14rem; margin: 1rem;\">");
+            var newBody = $("<div class= \"card-body\">");
+            var cardDate =$("<h5 class= \"card-title\">").text(data.list[i].dt_txt);
+            var cardIcon = $("<img src= \"http://openweathermap.org/img/wn/10d@2x.png\">");
+            var cardTemp = $("<p class = \"card-text\">").text("Temp: " + ((data.list[i].main.temp - 237.15) * 1.8 + 32).toFixed(2));
+            var cardHumid = $("<p class = \"card-text\">").text("Humidity: " + data.list[i].main.humidity + "%"); 
+    
+            newCard.append(newBody.append(cardDate, cardIcon, cardTemp, cardHumid));
+            $("#5day").append(newCard);
+    
+    };
+
+    
+};
+
+function callAjax(city){
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=b9a139b4b9cb18b6bfa3c4eb318e8ce0";
+    return $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(response =>{
+        data = response;
     });
+}
 
-    $("#srchBtn").on("click,", event =>{
-        renderCurrent();
-        render5day();
-        addHistory();
-    })
+callAjax(cityName).then(response =>{
+    render5day();
+    renderCurrent();
+});
 
-    function addHistory(){
-        // Adds most recent search to history bar, if not already on there.
-    };
+   
+   });
 
-    function renderCurrent(){
-        // Renders jumbotron with current weather info
-    };
-
-    function render5day (){
-        // Renders the 5 day forcast as cards below the current day forecast
-    };
 
