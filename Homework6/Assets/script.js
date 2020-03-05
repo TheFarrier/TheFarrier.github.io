@@ -44,6 +44,7 @@ $(document).ready(function() {
 
     function addHistory(city){
         // Adds most recent search to history bar, if not already on there.
+
         var newBtn = $("<button type=\"button\" class=\"list-group-item list-group-item-action\">");
         
         newBtn.text(city);
@@ -59,8 +60,9 @@ $(document).ready(function() {
         $("#weather").attr("src", "http://openweathermap.org/img/wn/"+ data.list[0].weather[0].icon +"@2x.png");
         $("#temp").text("Temperature: " + data.list[0].main.temp + " *F");
         $("#humidity").text("Humidity: " + data.list[0].main.humidity +"%");
-        $("#windspeed").text("Wind Speed: " + data.list[0].main.humidity +" MPH");
+        $("#windspeed").text("Wind Speed: " + data.list[0].wind.speed +" MPH");
         $("#index").text("UV Index: ");
+        console.log(data)
         
         var uv = $("<span class=\"badge\" >").text("uvData");
         
