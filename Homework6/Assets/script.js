@@ -6,6 +6,8 @@ $(document).ready(function() {
     var uvData = 0;
     // Used as the search term for API call
     var cityName = "san antonio";
+    //
+    var cityHistory = ["San Antonio","Austin"];
 
     // Submit event for the search bar and button
     $("#searchCity").submit(event =>{
@@ -51,6 +53,7 @@ $(document).ready(function() {
         newBtn.attr("data", city);
         
         $("#history").prepend(newBtn);
+
     };
 
     // Renders jumbotron with current weather info
