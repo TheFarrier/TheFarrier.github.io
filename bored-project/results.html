@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <!--css animate-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <!--materialize-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--my css-->
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Never Bored! Results</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        width: 100%;
+        border: solid 2px teal; 
+        
+      }
+      .container {
+        display:block;
+        height: 500px;
+        width: 500px;
+      }
+    </style>
+  </head>
+
+  <body class="index2">
+    <div class="center-align z-depth-2" id="resultsBanner">
+      <span class="white-text"><h1>Ready to kill some time?</h1></span>
+    </div>
+    <div class="container center-align">
+      <h3 class="animated infinite pulse delay-2s resultStyle" id="randomActivity"></h3>
+      <h5 class="resultStyle">Here are some places you can go try it out.</h5>
+      <div id="map"></div>
+    </div>
+    
+    
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrFx8v_GDWLBsK5ji8OA4f4XAWUSqsDz0&callback=initMap"
+    async defer></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrFx8v_GDWLBsK5ji8OA4f4XAWUSqsDz0&libraries=places"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>

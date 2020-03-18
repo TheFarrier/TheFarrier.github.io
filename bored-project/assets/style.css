@@ -1,0 +1,57 @@
+.index {
+  align-items: center;
+  background-color:#8cc6d8;
+  color: white;
+  text-shadow: black 1px 1px;
+  
+}
+
+.index2 {
+  background-color:#8cc6d8;
+}
+
+#resultsBanner {
+  background-color: #26a69a;
+  padding: 10px;
+}
+
+.resultStyle {
+  color: white;
+}
+
+.headerTitle {
+ color: white;
+ text-shadow: black 3px 3px;
+}
+
+.container {
+  display: block;
+  height: 500px;
+  width: 500px;
+}
+
+.btn-large:hover {
+    color: orange;
+}
+
+.changeColor {
+  color: orange;
+}
+
+[type="radio"]:not(:checked)+span, [type="radio"]:checked+span {
+    padding-left: 16px;
+}
+
+[type="radio"]:checked+span {
+    background-color:green;
+}
+
+[type="radio"]+span:after,
+[type="radio"]:checked+span:after {
+    display: none;
+}
+
+[type="radio"]+span:before {
+    display: none;
+}
+
