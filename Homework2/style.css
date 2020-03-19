@@ -13,3 +13,9 @@ body{
 main{
     flex: 1 0 auto;
 }
+
+@media (max-width: 767px) {                  
+    .navbar-brand {
+       display: none;
+    }
+ }
