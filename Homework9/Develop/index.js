@@ -17,38 +17,6 @@ const questions = [
 ];
 
 
-// async function init() {
-//   try {
-//     const url = "";
-//     const result = await axios.get(url);
-//     const markdown = await generateHTML(result.data.whatever);
-//   }
-//   catch (err){
-//     console.log("Error")
-//   }
-// };
-
-// generateMarkdown
-
-// init();
-
-
-
-// inquirer
-//   .prompt({
-//     message: "Enter your GitHub username:",
-//     name: "username"
-//   })
-//   .then(function({ username }) {
-//     const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
-
-//     axios.get(queryUrl).then(function(res) {
-      
-//       console.log(res.data[0].owner);
-
-//     });
-//   });
-
 async function init(){
   try {
     const inquiry = await inquirer.prompt(questions);
@@ -60,9 +28,13 @@ async function init(){
         await api.writeToFile('index.html', generate);
         const html = fs.readFileSync('index.html','utf8');
         const options = {format: 'letter'};
-        console.log(user.data)
         await api.createPdf(html,options,user.data);
-        // await open(`./pdf/${user.login}.pdf`, {wait:true})
+        console.log("File created!")
+        await fs.open(`./pdf/${user.data.login}.pdf`, 'r', (err) => {
+          if (err){
+           console.log(err);
+          }
+        })
     }
 
   }
