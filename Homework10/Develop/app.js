@@ -16,7 +16,9 @@ const questions = [
   },
   {
     message: "Role:",
-    name: "role"
+    type: "list",
+    name: "role",
+    choices: ["Manager","Engineer","Intern"]
   },
   {
     message: "Engineer's Github username:",
@@ -33,7 +35,18 @@ const questions = [
 ];
 
 // Use inquirer to ask how many employees you need to add
+async function generateEmployee(){
+  try {
+    const name = await inquirer.prompt(questions[0]);
+    const email = await inquirer.prompt(questions[1]);
+    const role = await inquirer.prompt(questions[2]);
 
+    }
+    
+  catch (err) {
+    console.log(err);
+  }
+};
 // Inquirer loop that asks for employee information
 // role
 // name
@@ -42,3 +55,5 @@ const questions = [
 // github if engineer
 // office number if manager
 // school if student
+
+generateEmployee();
