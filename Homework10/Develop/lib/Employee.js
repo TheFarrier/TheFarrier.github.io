@@ -1,10 +1,10 @@
 // Employee
 
 class Employee{
-  constructor(){
+  constructor(name,id,email){
     this.name = name;
     this.id = id;
-    this.title = title;
+    this.email = email;
   }
 
   getName(){
