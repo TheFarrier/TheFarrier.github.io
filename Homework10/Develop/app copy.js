@@ -1,11 +1,15 @@
 const fs = require("fs");
+const path = require("path");
 const html = require("./lib/htmlRenderer")
 const inquirer = require("inquirer");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 // Inquirer question array
+
 let id = 0
 const employees = [];
 const questions = [
@@ -75,7 +79,15 @@ async function generateEmployee(){
 
 async function generateHtml(){
   console.log(employees);
-  html(employees);
+  fs.writeFile(outputPath, html(employees),function(err) {
+
+    if (err) {
+      return console.log(err);
+    }
+  
+    console.log("Success!");
+  
+  });
   console.log("Employee HTML created!");
 }
 
@@ -96,6 +108,7 @@ async function init(){
     case "No":
       if(employees[0] !== undefined){
         generateHtml();
+        
       } else {
         console.log("No employees to list")
       };
