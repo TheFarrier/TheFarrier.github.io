@@ -85,10 +85,8 @@ async function generateHtml(){
       return console.log(err);
     }
   
-    console.log("Success!");
-  
+    console.log("Employee HTML created!");
   });
-  console.log("Employee HTML created!");
 }
 
 async function init(){
