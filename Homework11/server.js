@@ -10,7 +10,7 @@ var app = express();
 var PORT = 3000;
 var notePath = path.join(__dirname,"/db/db.json");
 
-// Sets up the Express app to handle data parsing
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
