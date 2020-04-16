@@ -28,41 +28,19 @@ CREATE TABLE employee (
 
 
 
--- Insert a set of records.
-INSERT INTO departments (department) VALUES ("Sales");
-INSERT INTO departments (department) VALUES ("Logistics");
-INSERT INTO departments (department) VALUES ("Service");
 
-INSERT INTO role (title, salary, department_id) VALUES ("Manager", 120000.00, 1);
-INSERT INTO role (title, salary, department_id) VALUES ("Salesman", 40000.00, 1);
-INSERT INTO role (title, salary, department_id) VALUES ("Processor", 50000.00, 2);
-INSERT INTO role (title, salary, department_id) VALUES ("Offloader", 30000.00, 2);
-INSERT INTO role (title, salary, department_id) VALUES ("Supervisor", 50000.00, 3);
-INSERT INTO role (title, salary, department_id) VALUES ("Representative", 30000.00, 3);
-
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Mike","Rugnetta", 1, null);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Adam","Neely", 5, null);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Alec","Castillo", 3, null);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Tyler","Larson", 6, 2);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Ben","Levin", 6, 2);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Harry","Brewis", 2, 1);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Lindsay","Ellis", 2, 1);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("George","Boothby", 4, 3);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Jason","Paradise", 4, 3);
-
-SELECT * FROM employeeRepo_db.departments;
-
+--SELECT tests 
 SELECT first_name, last_name, title, salary, department 
-FROM employee 
-INNER JOIN department USING (id)
-INNER JOIN role USING (id) 
-ORDER BY title;
+  FROM employee 
+  INNER JOIN department USING (id)
+  INNER JOIN role USING (id) 
+  ORDER BY title;
 
 SELECT *
-FROM role
-INNER JOIN departments USING (department_id)
-INNER JOIN employee USING (role_id) 
-ORDER BY department;
+  FROM role
+  INNER JOIN departments USING (department_id)
+  INNER JOIN employee USING (role_id) 
+  ORDER BY department;
 
 SELECT e1.first_name, e1.last_name, title, salary, department, CONCAT(e2.first_name, " ", e2.last_name) AS manager
 	FROM employee as e1
