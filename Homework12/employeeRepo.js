@@ -85,21 +85,205 @@ var orm = {
     }
   },
   addEmployee: async function(){
-    
+    try{
+      let data = await getTable("employee");
+
+      let questions = [
+        {
+          name: 'firstName',
+          message: "Enter employee\'s first name: ",
+        },
+        {
+          name: 'lastName',
+          message: 'Enter employee\'s last name: ',
+        },
+        {
+          name: 'roleId',
+          message: 'Select employee role ID:',
+        },
+        {
+          name: 'managerId',
+          message: 'Select employee manager ID',
+        }
+      ]
+      
+      const {firstName} = await inquirer.prompt(questions[0]);
+      const {lastName} = await inquirer.prompt(questions[1]);
+      await getTable("role");
+      const {roleId} = await inquirer.prompt(questions[2]);
+      await getTable("employee");
+      const {managerId} = await inquirer.prompt(questions[3]);
+      
+      await connection.query(
+        "INSERT INTO employee set ?",
+        {
+          first_name: firstName,
+          last_name: lastName,
+          role_id: roleId,
+          manager_id: managerId
+        },
+        function(err,res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " item inserted!\n");
+        }
+      )
+    }
+    catch (err){
+      console.log (err);
+    }
   },
   addRole: async function(){
+    try{
+      let data = await getTable("departments");
+      let depChoices = data.map(x => x.id);
+      await getTable("role")
     
+      let questions = [
+        {
+          name: 'title',
+          message: "Enter role title: ",
+        },
+        {
+          name: 'salary',
+          message: 'Enter role salary: ',
+        },
+        {
+          name: 'departmentId',
+          type: "list",
+          message: 'Under which department is this role?',
+          choices: depChoices
+        }
+      ]
+      
+      const {title} = await inquirer.prompt(questions[0]);
+      const {salary} = await inquirer.prompt(questions[1]);
+      await getTable("departments");
+      const {departmentId} = await inquirer.prompt(questions[2]);
+      
+      await connection.query(
+        "INSERT INTO role set ?",
+        {
+          title: title,
+          salary: salary,
+          department_id: departmentId
+        },
+        function(err,res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " item inserted!\n");
+        }
+      )
+    }
+    catch (err){
+      console.log (err);
+    }
   },
   addDepartment: async function(){
-    
+    try{
+      let data = await getTable("departments");
+  
+      const {department} = await inquirer.prompt([
+        {
+          name: 'department',
+          message: "Enter name of department: ",
+        }
+      ]);
+      
+      await connection.query(
+        "INSERT INTO departments set ?",
+        {
+          department: department,
+        },
+        function(err,res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " item inserted!\n");
+        }
+      )
+    }
+    catch (err){
+      console.log (err);
+    }
   },
   deleteItem: async function(){
+    try{
+      let {toBeDeleted} = await inquirer.prompt([
+        {
+          name: 'toBeDeleted',
+          type: "list",
+          message: "What table would you like delete from?",
+          choices:["employee","departments","role"]
+        }
+      ]);
     
+      let data = await getTable(toBeDeleted);
+      let idChoices = await data.map(x => x.id)
+    
+      let {id} = await inquirer.prompt([
+        {
+          name: "id",
+          type: "list",
+          message: "Choose an item by ID",
+          choices: idChoices
+        }
+      ]);
+    
+      await connection.query(`DELETE FROM ${toBeDeleted} WHERE id = ${id}`)
+    
+    }
+    catch (err){
+      console.log (err);
+    }
   },
   updateItem: async function(){
+    try{
+      let {toBeUpdated} = await inquirer.prompt([
+        {
+          name: 'toBeUpdated',
+          type: "list",
+          message: "What would you like to update?",
+          choices:["employee","departments","role"]
+        }
+      ]);
     
-  },
-
+      let data = await getTable(toBeUpdated);
+      let idChoices = await data.map(x => x.id);
+    
+      let questions = [
+        {
+          name: "id",
+          type: "list",
+          message: "Choose an item by ID",
+          choices: idChoices
+        },
+        {
+          name: 'colToUpdate',
+          type: "list",
+          message: 'Select column to update',
+          choices: function(){
+            switch (toBeUpdated){
+              case "employee":
+                return ["first_name","last_name","role_id","manager_id"]
+              case "departments":
+                return ["department"]
+              case "role":
+                return ["title","salary","department_id"]
+            }
+          }
+        },
+        {
+          name: 'newValue',
+          message: 'Enter new value',
+        },
+      ]
+      
+      let {id} = await inquirer.prompt(questions[0]);
+      let {colToUpdate} = await inquirer.prompt(questions[1]);
+      let {newValue} = await inquirer.prompt(questions[2]);
+      await connection.query(`UPDATE ${toBeUpdated} SET ${colToUpdate} = '${newValue}' WHERE id = ${id}`)
+    }
+    catch (err){
+      console.log (err);
+    }
+  }
 }
 
 async function getEmployees(sort){
