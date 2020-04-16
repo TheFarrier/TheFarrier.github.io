@@ -1,9 +1,6 @@
 const inquirer = require("inquirer");
 const orm = require("./employeeRepo.js")
 
-let employeeArray = []
-let roleArray = []
-
 const questions = [
   {
     message: "What would you like to do?",
@@ -26,17 +23,19 @@ async function init(){
     switch (action){
       case "View Employees": 
       const {sort} = await inquirer.prompt(questions[1])
-        getEmployees(sort);
+        await orm.getEmployees(sort);
         break;
       case "Update":
-        updateItem();
+        await orm.updateItem();
         break;
       case "Add":
-        addItem();
+        await orm.addItem();
         break;
       case "Remove":
-        deleteItem();
+        await orm.deleteItem();
         break;
+      case "Close":
+        await orm.endConnection();
       default:
         console.log(action);
         break;
@@ -47,3 +46,5 @@ async function init(){
   }
 
 }
+
+init();
